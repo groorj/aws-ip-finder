@@ -34,6 +34,11 @@ def get_boto_session(profile_name, aws_region):
     import boto3
     return boto3.Session(profile_name=profile_name, region_name=aws_region)
 
+def is_service_enabled(service_name):
+    if service_name in aws_services_list:
+        return True
+    return False
+
 # main
 if __name__ == "__main__":
     finder_info = []
@@ -42,14 +47,17 @@ if __name__ == "__main__":
     ipfinder = IpFinder(config)
     # print("Current configuration:\n", yaml.dump(config, default_flow_style=False))
     aws_regions_list = config.get("assertions").get("regions", [])
+    aws_services_list = config.get("assertions").get("services", [])
     boto_session = get_boto_session(config["profile_name"], default_aws_region)
 
     # execute for each AWS region
     for aws_region in aws_regions_list:
         # print("== Working region: " + aws_region)
         boto_session = get_boto_session(config["profile_name"], aws_region)
+        # EC2
         ec2 = boto_session.client("ec2", region_name=aws_region)
-        ipfinder.get_ec2_info(ec2)
+        if is_service_enabled("ec2"):
+            ipfinder.get_ec2_info(ec2)
     for x in finder_info:
         print(x)
 
