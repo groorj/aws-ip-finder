@@ -51,6 +51,17 @@ def is_service_enabled(service_name):
         return True
     return False
 
+def _print_output(dic):
+    if config_output_format == 'csv':
+        s = ""
+        s += "service_name,public_ip,resource_id\n"
+        for x in dic:
+            s += x["service"] + "," + x["public_ip"] + "," + x["resource_id"] + "\n"
+        print(s)
+    else:
+        for x in dic:
+            print(x)
+
 # main
 if __name__ == "__main__":
     finder_info = []
@@ -60,6 +71,7 @@ if __name__ == "__main__":
     # print("Current configuration:\n", yaml.dump(config, default_flow_style=False))
     aws_regions_list = config.get("assertions").get("regions", [])
     aws_services_list = config.get("assertions").get("services", [])
+    config_output_format = config.get("assertions").get("output_format")
     boto_session = get_boto_session(config["profile_name"], default_aws_region)
 
     # execute for each AWS region
@@ -74,7 +86,6 @@ if __name__ == "__main__":
         if is_service_enabled("natgateway"):
             ec2 = boto_session.client("ec2", region_name=aws_region)
             ipfinder.get_natgateway_info(ec2)
-    for x in finder_info:
-        print(x)
+    _print_output(finder_info)
 
 # End;

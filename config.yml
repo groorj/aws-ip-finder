@@ -34,5 +34,6 @@ assertions:
 #    - lightsail
 #    - rds
 #    - redshift
+  output_format: "csv" # csv or json
 
 # End ;
