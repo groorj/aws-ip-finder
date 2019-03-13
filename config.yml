@@ -6,7 +6,7 @@ profile_name: my-profile-name
 assertions:
   regions:
     - sa-east-1
-#    - us-east-1
+    - us-east-1
 #    - us-east-2
 #    - us-west-1
 #    - us-west-2
@@ -25,7 +25,8 @@ assertions:
 #    - sa-east-1
   services:
     - ec2
-    - apigateway
+    - natgateway
+#    - apigateway
 #    - cloudfront
 #    - elasticsearch
 #    - elb

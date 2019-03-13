@@ -19,9 +19,21 @@ class IpFinder:
         )
         for reservation in instances["Reservations"]:
             for instance in reservation["Instances"]:
-                #finder_info = [
                 finder_info.append(
-                    { 'service': "EC2", 'public_ip': instance["PublicIpAddress"], 'id': instance["InstanceId"] }
+                    { 'service': "ec2", 'public_ip': instance["PublicIpAddress"], 'resource_id': instance["InstanceId"] }
+                )
+
+    def get_natgateway_info(self, ec2):
+        instances = ec2.describe_nat_gateways(
+            Filters=[{
+                'Name': 'state',
+                'Values': ['available', 'pending'],
+            }]
+        )
+        for reservation in instances["NatGateways"]:
+            for instance in reservation["NatGatewayAddresses"]:
+                finder_info.append(
+                    { 'service': "natgateway", 'public_ip': instance["PublicIp"], 'resource_id': reservation["NatGatewayId"] }
                 )
 
 def _get_config_from_file(filename):
@@ -55,9 +67,13 @@ if __name__ == "__main__":
         # print("== Working region: " + aws_region)
         boto_session = get_boto_session(config["profile_name"], aws_region)
         # EC2
-        ec2 = boto_session.client("ec2", region_name=aws_region)
         if is_service_enabled("ec2"):
+            ec2 = boto_session.client("ec2", region_name=aws_region)
             ipfinder.get_ec2_info(ec2)
+        # NAT Gateway
+        if is_service_enabled("natgateway"):
+            ec2 = boto_session.client("ec2", region_name=aws_region)
+            ipfinder.get_natgateway_info(ec2)
     for x in finder_info:
         print(x)
 
