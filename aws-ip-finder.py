@@ -40,7 +40,7 @@ class IpFinder:
 def _get_config_from_file(filename):
     config = {}
     with open(filename, "r") as stream:
-        config = yaml.load(stream)
+        config = yaml.load(stream, Loader=yaml.SafeLoader)
     return config
 
 def get_boto_session(profile_name, aws_region):
