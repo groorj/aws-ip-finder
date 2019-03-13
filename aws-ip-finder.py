@@ -19,9 +19,10 @@ class IpFinder:
         )
         for reservation in instances["Reservations"]:
             for instance in reservation["Instances"]:
-                finder_info.append(
-                    { 'service': "ec2", 'public_ip': instance["PublicIpAddress"], 'resource_id': instance["InstanceId"] }
-                )
+                if 'PublicIpAddress' in instance:
+                    finder_info.append(
+                        { 'service': "ec2", 'public_ip': instance["PublicIpAddress"], 'resource_id': instance["InstanceId"] }
+                    )
 
     def get_natgateway_info(self, ec2):
         instances = ec2.describe_nat_gateways(
