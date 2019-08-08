@@ -37,5 +37,22 @@ assertions:
 ### Running
 `python3 -tt aws-ip-finder.py config.yml`
 
+### Output
+
+csv:
+```
+service_name,public_ip,resource_id
+ec2,52.222.90.111,i-0b2a765034c6bb4d1
+ec2,52.0.222.10,i-09cd7765e86d2de02
+ec2,52.2.111.9,i-06701765f0a50c19b
+```
+
+json:
+```
+{'service': 'ec2', 'public_ip': '52.222.90.111', 'resource_id': 'i-0b2a765034c6bb4d1'}
+{'service': 'ec2', 'public_ip': '52.0.222.10', 'resource_id': 'i-09cd7765e86d2de02'}
+{'service': 'ec2', 'public_ip': '52.2.111.9', 'resource_id': 'i-06701765f0a50c19b'}
+```
+
 ### Notes
 You can create as many configuration files as you want and provide it as an argument to the aws-ip-finder.py script.
