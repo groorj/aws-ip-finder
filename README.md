@@ -9,6 +9,8 @@ git clone https://github.com/groorj/aws-ip-finder.git
 cd aws-ip-finder
 pip install -r requirements.txt
 ```
+### Docker build
+`docker build -t aws-ip-finder -f Dockerfile .`
 
 ### Requirements
 - Python3
@@ -36,6 +38,9 @@ assertions:
 
 ### Running
 `python3 -tt aws-ip-finder.py config.yml`
+
+### Docker Running
+`docker run -v ${PWD}/config.yml:/app/config.yml -v ${HOME}/.aws/credentials:/root/.aws/credentials  --rm -it aws-ip-finder`
 
 ### Output
 
