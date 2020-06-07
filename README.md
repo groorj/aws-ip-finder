@@ -29,6 +29,7 @@ assertions:
     services:
       - ec2
       - natgateway
+      - rds
   output_format: "csv"
 ```
 - **profile_name**: `This is the AWS profile name that you use with your account located at ~/.aws/credentials`
