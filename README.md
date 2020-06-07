@@ -34,7 +34,7 @@ assertions:
 ```
 - **profile_name**: `This is the AWS profile name that you use with your account located at ~/.aws/credentials`
 - **regions**: `A list of regions that you want this script to craw and get data for`
-- **services**: `A list of services to query for Public IPs`. Current options are: `ec2`, `natgateway`
+- **services**: `A list of services to query for Public IPs`. Current options are: `ec2`, `natgateway`, `rds`
 - **output format**: `This is the format that the output will be presented`. Current options are: `csv`, `json`
 
 ### Running
